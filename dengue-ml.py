@@ -364,17 +364,20 @@ def run_Neural(X, y):
 # Lendo CSV utilizando pandas
 raw_X = pandas.read_csv('dengue-ml-features.data.csv', sep=',')
 raw_Y = pandas.read_csv('dengue-ml-labels.data.csv', sep=',')
+
 # salvando apenas a primeira coluna como classe
-# https://stackoverflow.com/questions/15360925/how-to-get-the-first-column-of-a-pandas-dataframe-as-a-series
-y = raw_Y.ix[:,0]
+y = raw_Y[['total_cases']]
 
 # substituindo dados faltantes pela média da coluna, utilizando Imputer
 imp = SimpleImputer()
-pre_scale_X = imp.fit_transform(raw_X)
+pre_scale_X = imp.fit_transform(y)
 
 # padronizando as colunas para média 0 e desvio padrão 1, utilizando Scaler
 scaler = StandardScaler()
 X = scaler.fit_transform(pre_scale_X)
+
+# print(X)
+# exit()
 
 maiorScoreSVM, mediaScoreSVM = run_SVM(X,y)	
 maiorScoreRF, mediaScoreRF = run_RF(X, y)
