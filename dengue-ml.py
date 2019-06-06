@@ -370,14 +370,11 @@ y = raw_Y[['total_cases']]
 
 # substituindo dados faltantes pela média da coluna, utilizando Imputer
 imp = SimpleImputer()
-pre_scale_X = imp.fit_transform(y)
+pre_scale_X = imp.fit_transform(raw_X)
 
 # padronizando as colunas para média 0 e desvio padrão 1, utilizando Scaler
 scaler = StandardScaler()
 X = scaler.fit_transform(pre_scale_X)
-
-# print(X)
-# exit()
 
 maiorScoreSVM, mediaScoreSVM = run_SVM(X,y)	
 maiorScoreRF, mediaScoreRF = run_RF(X, y)
